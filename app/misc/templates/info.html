@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <!-- If you move this form below the headlines it will not work
+    Perhaps it has something to do with HTML rendering 
+    -->
+    <div class="container query">
+        <h1>Provide your queries here</h4>    
+        {{ form.hidden_tag() }}
+        {{ wtf.quick_form(form) }}       
+    </div>
+
+    <div class="container currencies">
+        <h2 align="center">Live data from Openexchange.org API</h1>
+        <h4 align="center">1 {{ currency_from }} = {{ rate }} {{ currency_to }}</h4>
+    </div>
+    <hr/>
+    <div class="container weather">
+        <h2 align="center">Weather forecast using Open weather API</h1>
+        <h4 align="center">Current weather in  {{ city }}:    
+            {% if weather %}
+                {{ weather.description }} | {{ weather.temperature }} &#8451;
+            {% else %}
+                No data available!!!
+            {% endif %}
+        </h4>
+    </div>
+    <hr/>
+
+    <div class="container headlines">
+        <h2 align="center">Headlines from {{ publication.upper()}} RSS feeds</h1>
+        {% if articles %}
+            <h3 align="center">Maximum headlines is set at {{ max }} article(s)</h3>
+        {% endif %}
+        {% for article in articles[0:max] %}
+            <b><a href="{{ article.link }}" target="_blank">{{ article.title }}</a></b><br/>
+            <i>{{ article.published }}</i><br/>
+            <p>{{ article.summary|safe }}</p>
+            <p></p>
+        {% endfor %}
+    </div>
+    
+{% endblock content %}

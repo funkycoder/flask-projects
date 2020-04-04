@@ -40,6 +40,9 @@ def create_app(config_type):
     from app.misc import misc
     app.register_blueprint(misc)
 
+    from app.sched import appointment
+    app.register_blueprint(appointment)
+
     return app
 
 

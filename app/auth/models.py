@@ -5,16 +5,25 @@ from flask_login import UserMixin
 from datetime import datetime
 
 class User(UserMixin, db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'user'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_name = db.Column(db.String(20))
+    user_name = db.Column(db.String(100))
     user_email = db.Column(db.String(60), unique=True, index=True)
     user_password = db.Column(db.String(80))
     registration_date = db.Column(db.DateTime, default=datetime.now)
+    created = db.Column(db.DateTime, default=datetime.utcnow())
+    modified = db.Column(db.DateTime, default=datetime.utcnow(), onupdate=datetime.utcnow())
+    active = db.Column(db.Boolean, default=False)
 
     def check_password(self, password):
         return bcrypt.check_password_hash(self.user_password, password)
+
+    def set_password(self, password):
+        self.user_password = bcrypt.generate_password_hash(password)
+
+    def set_active(self, status=True):
+        self.active = status
         
     # Class methods belong to a class but not associated with any class instance
     @classmethod

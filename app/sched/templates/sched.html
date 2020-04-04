@@ -1,0 +1,47 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container appointments">
+  <div class="table-responsive-md">
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Start</th>
+          <th scope="col">End</th>
+          <th scope="col">All day</th>
+          <th scope="col">Location</th>
+          <th scope="col">Description</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for appt in appts %}
+        <tr>
+          <th scope="row">{{ appt.title }}</th>
+          <td>{{ appt.start }}</td>
+          <td>{{ appt.end }}</td>
+          <td>{% if (appt.allday) %} Yes {% else %} No {% endif %}</td>
+          <td>{{ appt.location }}</td>
+          <td>{{ appt.description }}</td>
+          <td>
+            <span class="label label-success"
+              ><a
+                href="{{ url_for('appointment.create_appointment') }}"
+                style="color: floralwhite"
+                >create</a
+              ></span
+            >
+            <span class="label label-primary"
+              ><a
+                href="{{ url_for('appointment.edit_appointment', appt_id=appt.id) }}"
+                style="color: floralwhite"
+                >edit</a
+              ></span
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock content %}

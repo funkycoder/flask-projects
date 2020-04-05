@@ -1,5 +1,6 @@
 {% extends 'layout.html' %} {% block content %}
 <div class="container appointments">
+  <h1 align="center">The following are appointments for {{user_name}}</h1>
   <div class="table-responsive-md">
     <table class="table">
       <thead class="thead-light">
@@ -26,15 +27,22 @@
             <span class="label label-success"
               ><a
                 href="{{ url_for('appointment.create_appointment') }}"
-                style="color: floralwhite"
+                style="color: floralwhite;"
                 >create</a
               ></span
             >
             <span class="label label-primary"
               ><a
                 href="{{ url_for('appointment.edit_appointment', appt_id=appt.id) }}"
-                style="color: floralwhite"
+                style="color: floralwhite;"
                 >edit</a
+              ></span
+            >
+            <span class="label label-info"
+              ><a
+                href="{{ url_for('appointment.delete_appointment', appt_id=appt.id) }}"
+                style="color: floralwhite;"
+                >delete</a
               ></span
             >
           </td>
